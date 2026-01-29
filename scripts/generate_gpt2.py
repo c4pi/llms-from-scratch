@@ -4,7 +4,7 @@ import tiktoken
 import torch
 
 from llms_from_scratch.inference import generate, text_to_token_ids, token_ids_to_text
-from llms_from_scratch.models.gpt2 import GPTModel, get_config, load_weights, GPT_CONFIG
+from llms_from_scratch.models.gpt2 import GPT_CONFIG, GPTModel, get_config, load_weights
 from llms_from_scratch.paths import CHECKPOINTS_DIR
 
 
