@@ -1,12 +1,80 @@
 [project]
 name = "llms-from-scratch"
 version = "0.1.0"
-description = "Add your description here"
+description = "Building LLMs from scratch, following Sebastian Raschka's book"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "chainlit>=2.9.6",
     "matplotlib>=3.10.8",
+    "pandas>=2.2.0",
+    "requests>=2.31.0",
     "tiktoken>=0.12.0",
     "torch>=2.9.1",
     "torchvision>=0.24.1",
 ]
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.8.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["llms_from_scratch"]
+
+[project.scripts]
+pretrain-gpt2 = "scripts.pretrain_gpt2:main"
+generate-gpt2 = "scripts.generate_gpt2:main"
+benchmark-kvcache = "scripts.benchmark_kvcache:main"
+finetune-classifier = "scripts.finetune_classifier:main"
+classify-text = "scripts.classify_text:main"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+indent-width = 4
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "D",        # docstrings
+    "ANN",      # type annotations enforcement
+    "TD",       # todo style
+    "FIX",      # fixme comments
+    "COM",      # trailing commas
+    "E501",     # line length
+    "DJ",       # django
+    "EXE",      # shebang
+    "T10",      # debugger
+    "TRY003",   # long exception msgs
+    "EM101",    # string in exception
+    "EM102",    # fstring in exception
+    "PLR0913",  # too many args
+    "PLR2004",  # magic values
+    "S101",     # assert
+    "T20",      # print statements
+    "FBT",      # boolean trap
+    "RET504",   # unnecessary assigment 
+]
+fixable = ["ALL"]
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["S101", "ARG001", "ARG002", "PLR2004"]
+"**/__init__.py" = ["F401"]
+"app.py" = ["F403"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["llms_from_scratch"]
+force-sort-within-sections = true
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = false
